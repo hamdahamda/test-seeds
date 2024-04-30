@@ -39,11 +39,16 @@ jobs:
     environment: Development
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to localhost
-        uses: appleboy/ssh-action@master
-        with:    
-          host: localhost
-          port: 8080
+      - name: start minikube
+        id: minikube
+        uses: medyagh/setup-minikube@latest
+    
+    # steps:
+    #   - name: Deploy to localhost
+    #     uses: appleboy/ssh-action@master
+    #     with:    
+    #       host: localhost
+    #       port: 8080
   # deployment:
   #   needs: build
   #   environment: Development
