@@ -8,6 +8,8 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	// Nama Environment bisa diambil dari environment variable
+	os.Setenv("Environment_Name", "Development")
+	
 	environmentName := os.Getenv("Environment_Name")
 
 	fmt.Fprintf(w, "<h1>Nama Aplikasi: Seeds Test</h1>")
