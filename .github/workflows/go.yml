@@ -32,4 +32,16 @@ jobs:
       with:
           push: true
           tags: hamda19/seeds-test:latest
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    name: deploy to minikube
+    steps:  
+    - name: Deploy to minikube
+      run:
+        kubectl apply -f deployment.yaml
+    - name: Test service URLs
+      run: |
+          minikube service list
+          minikube service dev --url
           
