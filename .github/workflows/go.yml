@@ -6,8 +6,8 @@ name: Go Test
 on:
   push:
     branches: [ "dev" ]
-  # pull_request:
-  #   branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
 
 jobs:
 
