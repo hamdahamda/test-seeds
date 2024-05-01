@@ -31,6 +31,6 @@ jobs:
         with:
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/Seeds-test:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/seeds-test:latest
    
     
