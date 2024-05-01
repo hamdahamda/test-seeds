@@ -5,9 +5,9 @@ name: Go Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
 
@@ -31,7 +31,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
           push: true
-          tags: hamda19/seeds-test-prod:latest
+          tags: hamda19/seeds-test-dev:latest
           
   # publish:
   #   runs-on: ubuntu-latest
