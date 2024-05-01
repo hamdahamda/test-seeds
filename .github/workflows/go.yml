@@ -44,7 +44,7 @@ jobs:
           minikube start
           minikube kubectl -- get pods --all-namespaces
       - name: Apply Kubernetes configuration
-        run: kubectl apply -f deployment.yaml -f service.yaml
+        run: kubectl apply -f deployment.yaml
       - name: Test service URLs
         run: |
           minikube service list
