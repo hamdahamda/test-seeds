@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev
+  name: prod
   labels:
-    app: dev
+    app: prod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dev
+      app: prod
   template:
     metadata:
       labels:
-        app: dev
+        app: prod
     spec:
       containers:
-        - name: dev
-          image: hamda19/seeds-test-dev:latest
+        - name: prod
+          image: hamda19/seeds-test-prod:latest
           ports:
             - containerPort: 8080
 
@@ -26,11 +26,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev
+  name: prod
   namespace: default
 spec:
   selector:
-    app: dev
+    app: prod
   type: NodePort
   ports:
   - name: http
