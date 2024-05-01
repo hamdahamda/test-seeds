@@ -39,18 +39,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Start minikube
-        uses: medyagh/setup-minikube@master
-
-      - name: Deploy to Minikube
-        run: kubectl apply -f deployment.yaml
+      - name: Setup Minikube
+        run: |
+          minikube start
+          minikube kubectl -- get pods --all-namespaces
+      - name: Apply Kubernetes configuration
+        run: kubectl apply -f deployment.yaml -f service.yaml
       - name: Test service URLs
         run: |
           minikube service list
           minikube service dev --url
           echo "------------------opening the service------------------"
           curl $(minikube service dev --url)  
+        
+
+      # - name: Start minikube
+      #   uses: medyagh/setup-minikube@master
+
+      # - name: Deploy to Minikube
+      #   run: kubectl apply -f deployment.yaml
+      # - name: Test service URLs
+      #   run: |
+      #     minikube service list
+      #     minikube service dev --url
+      #     echo "------------------opening the service------------------"
+      #     curl $(minikube service dev --url)  
 
     # name: build example and deploy to minikube
     # steps:
