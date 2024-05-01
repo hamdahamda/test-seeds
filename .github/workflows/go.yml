@@ -57,4 +57,4 @@ jobs:
         minikube service list
         minikube service dev --url
         echo "------------------opening the service------------------"
-        curl $(minikube service example --url)  
+        curl $(minikube service dev --url)  
