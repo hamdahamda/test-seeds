@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: dev
-          image: hamda19/seeds-test:latest
+          image: hamda19/seeds-test-dev:latest
           ports:
             - containerPort: 8080
 
