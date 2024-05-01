@@ -45,6 +45,12 @@ jobs:
 
       - name: Deploy to Minikube
         run: kubectl apply -f deployment.yaml
+      - name: Test service URLs
+        run: |
+          minikube service list
+          minikube service dev --url
+          echo "------------------opening the service------------------"
+          curl $(minikube service dev --url)  
 
     # name: build example and deploy to minikube
     # steps:
