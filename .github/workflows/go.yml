@@ -31,28 +31,28 @@ jobs:
       uses: docker/build-push-action@v5
       with:
           push: true
-          tags: hamda19/seeds-test:latest
+          tags: hamda19/seeds-test-dev:latest
           
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+  # publish:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v2
 
-    - name: Setup Minikube
-      run: |
-        minikube start
-        minikube kubectl -- get pods --all-namespaces
+  #   - name: Setup Minikube
+  #     run: |
+  #       minikube start
+  #       minikube kubectl -- get pods --all-namespaces
 
-    - name: Apply Kubernetes configuration
-      run: kubectl apply -f deployment.yaml
-    - name: Test service URLs
-      run: |
-          minikube service list
-          minikube service dev --url
-          echo "------------------opening the service------------------"
-          curl $(minikube service dev --url)  
+  #   - name: Apply Kubernetes configuration
+  #     run: kubectl apply -f deployment.yaml
+  #   - name: Test service URLs
+  #     run: |
+  #         minikube service list
+  #         minikube service dev --url
+  #         echo "------------------opening the service------------------"
+  #         curl $(minikube service dev --url)  
     
     # steps:
     #   - name: Checkout code
