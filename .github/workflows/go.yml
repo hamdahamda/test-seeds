@@ -48,10 +48,10 @@ jobs:
     - name: Apply Kubernetes configuration
       # run: kubectl apply -f deployment.yaml
       run: | 
-          kubectl create deployment deployment.yaml --image=hamda19/seeds-test-dev:latest
-          kubectl expose deployment deployment.yaml --type=NodePort --port=8080
+          kubectl create deployment deployment --image=hamda19/seeds-test-dev:latest
+          kubectl expose deployment deployment --type=NodePort --port=8080
           kubectl get svc
-          minikube service deployment.yaml --url
+          minikube service deployment --url
 
     - name: Test service URLs
       run: |
