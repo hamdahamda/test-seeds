@@ -26,11 +26,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: prod
+  name: dev
   namespace: default
 spec:
   selector:
-    app: prod
+    app: dev
   type: NodePort
   ports:
   - name: http
