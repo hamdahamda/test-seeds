@@ -48,7 +48,7 @@ jobs:
     - name: Apply Kubernetes configuration
       # run: kubectl apply -f deployment.yaml
       run: | 
-          kubectl create deployment deployment.yaml
+          kubectl create deployment deployment.yaml --image=hamda19/seeds-test-dev:latest
           kubectl expose deployment deployment.yaml --type=NodePort --port=8080
           kubectl get svc
           minikube service deployment.yaml --url
