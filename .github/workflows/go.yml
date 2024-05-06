@@ -1,46 +1,78 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
+# # This workflow will build a golang project
+# # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
 
-name: Go Test
+# name: Go Test
 
+# on:
+#   push:
+#     branches: [ "testing" ]
+#   pull_request:
+#     branches: [ "testing" ]
+
+# jobs:
+
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v4
+
+#     - name: Build
+#       run: go build -v ./...
+
+#     - name: Test
+#       run: go test -v ./...
+  
+#     - name: Login to Docker Hub
+#       uses: docker/login-action@v3
+#       with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_TOKEN }}
+#     - name: Build and push
+#       uses: docker/build-push-action@v5
+#       with:
+#           push: true
+#           tags: hamda19/seeds-test:latest
+          
+#   publish:
+#     runs-on: ubuntu-latest
+#     needs: build
+#     steps:
+#       - name: start minikube
+#         id: minikube
+#         uses: medyagh/setup-minikube@latest
+#       # now you can run kubectl to see the pods in the cluster
+#       - name: kubectl
+#         run: kubectl get pods -A
+ 
+name: CI
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "testing" ]
   pull_request:
-    branches: [ "dev" ]
-
+    branches: [ "testing" ]
 jobs:
-
-  build:
+  job1:
     runs-on: ubuntu-latest
+    name: build example and deploy to minikube
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Build
-      run: go build -v ./...
-
-    - name: Test
-      run: go test -v ./...
-  
-    - name: Login to Docker Hub
-      uses: docker/login-action@v3
-      with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-    - name: Build and push
-      uses: docker/build-push-action@v5
-      with:
-          push: true
-          tags: hamda19/seeds-test:latest
-          
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: start minikube
-        id: minikube
-        uses: medyagh/setup-minikube@latest
-      # now you can run kubectl to see the pods in the cluster
-      - name: kubectl
-        run: kubectl get pods -A
- 
+    - uses: actions/checkout@v2
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
+    - name: Try the cluster !
+      run: kubectl get pods -A
+    - name: Build image
+      run: |
+        export SHELL=/bin/bash
+        eval $(minikube -p minikube docker-env)
+        docker build -f ./Dockerfile -t local/example .
+        echo -n "verifying images:"
+        docker images        
+    - name: Deploy to minikube
+      run:
+        kubectl apply -f deploy-to-minikube.yaml
+    - name: Test service URLs
+      run: |
+        minikube service list
+        minikube service example --url
+        echo "------------------opening the service------------------"
+        curl $(minikube service example --url)        
