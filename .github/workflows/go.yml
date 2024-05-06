@@ -33,82 +33,14 @@ jobs:
           push: true
           tags: hamda19/seeds-test:latest
           
-  # publish:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #   - name: Checkout repository
-  #     uses: actions/checkout@v2
-
-  #   - name: Setup Minikube
-  #     run: |
-  #       minikube start
-  #       minikube kubectl -- get pods --all-namespaces
-
-  #   - name: Apply Kubernetes configuration
-  #     # run: kubectl apply -f deployment.yaml
-  #     run: | 
-  #         kubectl create deployment deployment --image=hamda19/seeds-test-dev:latest
-  #         kubectl expose deployment deployment --type=NodePort --port=8080
-  #         kubectl get svc
-  #         minikube service deployment --url
-
-  #   - name: Test service URLs
-  #     run: |
-  #         minikube service list
-  #         minikube service dev --url
-  #         echo "------------------opening the service------------------"
-  #         curl $(minikube service dev --url)  
-    
-    # steps:
-    #   - name: Checkout code
-    #     uses: actions/checkout@v2
-    #   - name: Setup Minikube
-    #     run: |
-    #       minikube start
-    #       minikube kubectl -- get pods --all-namespaces
-    #   - name: Apply Kubernetes configuration
-    #     run: kubectl apply -f deployment.yaml
-    #   - name: Test service URLs
-    #     run: |
-    #       minikube service list
-    #       minikube service dev --url
-    #       echo "------------------opening the service------------------"
-    #       curl $(minikube service dev --url)  
-        
-
-      # - name: Start minikube
-      #   uses: medyagh/setup-minikube@master
-
-      # - name: Deploy to Minikube
-      #   run: kubectl apply -f deployment.yaml
-      # - name: Test service URLs
-      #   run: |
-      #     minikube service list
-      #     minikube service dev --url
-      #     echo "------------------opening the service------------------"
-      #     curl $(minikube service dev --url)  
-
-    # name: build example and deploy to minikube
-    # steps:
-    # - uses: actions/checkout@v2
-    # - name: Start minikube
-    #   uses: medyagh/setup-minikube@master
-    # # - name: Try the cluster !
-    # #   run: kubectl get pods -A
-    # # - name: Build image
-    # #   run: |
-    # #     export SHELL=/bin/bash
-    # #     eval $(minikube -p minikube docker-env)
-    # #     docker build -f ./Dockerfile -t local/example .
-    # #     echo -n "verifying images:"
-    # #     docker images        
-    # - name: Deploy to minikube
-    #   run:
-    #     kubectl apply -f deployment.yaml
-    # - name: Test service URLs
-    #   run: |
-    #     minikube service list
-    #     minikube service dev --url
-    #     echo "------------------opening the service------------------"
-    #     curl $(minikube service dev --url)  
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: start minikube
+        id: minikube
+        uses: medyagh/setup-minikube@latest
+      # now you can run kubectl to see the pods in the cluster
+      - name: kubectl
+        run: kubectl get pods -A
+ 
